@@ -1,0 +1,6 @@
+{
+  "_comment": "Folder IDs the MCP is permitted to operate inside. Tools refuse any operation outside these (and their descendants).",
+  "allowed_folder_ids": [
+    "1o-XuiXQw1PUvyh3PUFylULWQjyc4uyNq"
+  ]
+}

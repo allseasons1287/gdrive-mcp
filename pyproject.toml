@@ -1,0 +1,27 @@
+[project]
+name = "gdrive-mcp"
+version = "0.1.0"
+description = "Custom Google Drive MCP server with full CRUD + soft-delete + allowlist + audit log"
+requires-python = ">=3.12"
+dependencies = [
+    "mcp>=1.2.0",
+    "google-api-python-client>=2.140.0",
+    "google-auth>=2.34.0",
+    "pydantic>=2.8.0",
+    "starlette>=0.38.0",
+    "uvicorn[standard]>=0.30.0",
+    "python-dotenv>=1.0.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3.0",
+    "pytest-asyncio>=0.24.0",
+]
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["auth*", "drive*", "audit*"]
