@@ -13,17 +13,16 @@ from audit.logger import shutdown_audit
 from auth.service_account import get_service_account_email
 from drive import tools
 
-import os as _os
+from mcp.server.transport_security import TransportSecuritySettings
+
 mcp = FastMCP(
     "gdrive-mcp",
     streamable_http_path="/mcp",
     stateless_http=True,
+    transport_security=TransportSecuritySettings(
+        enable_dns_rebinding_protection=False,
+    ),
 )
-# Disable DNS rebinding protection — Railway puts us behind a public domain
-try:
-    mcp.settings.streamable_http_validate_dns_rebinding = False
-except Exception:
-    pass
 
 
 @mcp.tool()
