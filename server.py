@@ -13,7 +13,17 @@ from audit.logger import shutdown_audit
 from auth.service_account import get_service_account_email
 from drive import tools
 
-mcp = FastMCP("gdrive-mcp")
+import os as _os
+mcp = FastMCP(
+    "gdrive-mcp",
+    streamable_http_path="/mcp",
+    stateless_http=True,
+)
+# Disable DNS rebinding protection — Railway puts us behind a public domain
+try:
+    mcp.settings.streamable_http_validate_dns_rebinding = False
+except Exception:
+    pass
 
 
 @mcp.tool()
@@ -172,7 +182,7 @@ def main():
 
     import uvicorn
     try:
-        uvicorn.run(app, host=host, port=port, log_level="info")
+        uvicorn.run(app, host=host, port=port, log_level="info", proxy_headers=True, forwarded_allow_ips="*")
     finally:
         shutdown_audit()
 
